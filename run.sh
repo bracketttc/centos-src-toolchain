@@ -97,7 +97,7 @@ GMP_VER=$(basename $(ls gmp*) .tar.gz | cut -d '-' -f 2-)
 MPFR_VER=$(basename $(ls mpfr*) .tar.gz | cut -d '-' -f 2-)
 ISL_VER=$(basename $(ls isl*) .tar.gz | cut -d '-' -f 2-)
 CLOOG_VER=$(basename $(ls cloog*) .tar.gz | cut -d '-' -f 2-)
-MPC_VER=$(basename $(ls libmpc*) .tar.gz | cut -d '-' -f 2-)
+MPC_VER=$(basename $(ls mpc*) .tar.gz | cut -d '-' -f 2-)
 NCURSES_VER=$(basename $(ls ncurses*) .tar.gz | cut -d '-' -f 2-)
 GETTEXT_VER=$(basename $(ls gettext*) .tar.gz | cut -d '-' -f 2-)
 popd > /dev/null
@@ -106,8 +106,11 @@ if [ ! -e crosstool-ng ]; then
     git clone https://github.com/crosstool-ng/crosstool-ng -b crosstool-ng-1.23.0
 fi
 pushd crosstool-ng > /dev/null
+git apply ../crosstool.patch
+cp ../crosstool.config .config
 ./maintainer/addToolVersion.sh --gcc -s $GCC_VER --binutils $BINUTILS_VER --glibc $GLIBC_VER --gmp $GMP_VER --mpfr $MPFR_VER --isl $ISL_VER --cloog $CLOOG_VER --mpc $MPC_VER --ncurses $NCURSES_VER --gettext $GETTEXT_VER
 ./bootstrap
 ./configure --enable-local
 make
+echo "Run ./ct-ng menuconfig to customize your build target, linux kernel and toolchain alias, then run ./ct-ng build."
 popd
