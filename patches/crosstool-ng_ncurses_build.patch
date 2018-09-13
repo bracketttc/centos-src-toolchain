@@ -1,0 +1,22 @@
+diff --git a/scripts/build/companion_libs/220-ncurses.sh b/scripts/build/companion_libs/220-ncurses.sh
+index 7a1379d0..aaa8d2c7 100644
+--- a/scripts/build/companion_libs/220-ncurses.sh
++++ b/scripts/build/companion_libs/220-ncurses.sh
+@@ -31,8 +31,7 @@ do_ncurses_for_build() {
+           "--without-tests" \
+           "--without-cxx" \
+           "--without-cxx-binding" \
+-          "--without-ada" \
+-          "--without-fallbacks" )
++          "--without-ada" )
+     do_ncurses_backend host="${CT_BUILD}" \
+                        destdir="${CT_BUILDTOOLS_PREFIX_DIR}" \
+                        cflags="${CT_CFLAGS_FOR_BUILD}" \
+@@ -154,6 +153,7 @@ do_ncurses_backend() {
+ 
+     CT_DoLog EXTRA "Configuring ncurses"
+     CT_DoExecLog CFG                                                    \
++    CPPFLAGS="${cppflags} -P"                                           \
+     CFLAGS="${cflags}"                                                  \
+     LDFLAGS="${ldflags}"                                                \
+     ${CONFIG_SHELL}                                                     \

@@ -1,5 +1,6 @@
 # Fetched files
 crosstool-ng
-repos
+files
 rpmbuild
+srpms
 tarballs
